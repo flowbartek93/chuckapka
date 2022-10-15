@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class FactService {
   constructor(private httpService: HttpClient) {
     this.randomJokeObservable$ = this.randomJoke$.pipe(
-      exhaustMap((joke) => {
+      exhaustMap(() => {
         return this.httpService
           .get<httpJokeResponse>(this.randomJokeUrl, {
             headers: {
@@ -24,17 +24,46 @@ export class FactService {
           .pipe(map(this.generateRandomJoke), takeUntil(this.onDestroy$));
       })
     );
+
+    this.getCategoriesObservable$ = this.getCategories$.pipe(
+      exhaustMap(() => {
+        console.log('call');
+        return this.httpService
+          .get<string[]>(this.categoriesUrl, {
+            headers: {
+              accept: 'application/json',
+              'X-RapidAPI-Key': environment.api_key,
+              'X-RapidAPI-Host': environment.host,
+            },
+          })
+          .pipe(takeUntil(this.onDestroy$));
+      })
+    );
   }
 
+  public categories: string[] = [];
+
   public randomJokeObservable$: Observable<Joke | null> = new Observable();
-  private randomJoke$ = new Subject<null>();
+  private randomJoke$ = new Subject();
+
+  public getCategoriesObservable$: Observable<string[] | null> =
+    new Observable();
+  private getCategories$ = new Subject();
+
   private onDestroy$ = new Subject<boolean>();
 
   private randomJokeUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random';
 
+  private categoriesUrl =
+    'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories';
+
   getRandomJoke() {
     this.randomJoke$.next(null);
+  }
+
+  getCategories() {
+    this.getCategories$.next(null);
   }
 
   private generateRandomJoke(res: httpJokeResponse): Joke {
@@ -51,8 +80,4 @@ export class FactService {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
   }
-
-  // displayRandomJoke(randomJoke: Observable<Joke>): void {
-  //   this.randomJoke = randomJoke;
-  // }
 }
