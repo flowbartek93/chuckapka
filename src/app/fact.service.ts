@@ -13,8 +13,6 @@ export class FactService {
   constructor(private httpService: HttpClient) {
     this.randomJokeObservable$ = this.randomJoke$.pipe(
       exhaustMap((joke) => {
-        console.log(joke);
-
         return this.httpService
           .get<httpJokeResponse>(this.randomJokeUrl, {
             headers: {
