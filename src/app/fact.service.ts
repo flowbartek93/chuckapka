@@ -10,47 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class FactService {
-  constructor(private httpService: HttpClient) {
-    this.randomJokeObservable$ = this.randomJoke$.pipe(
-      exhaustMap(() => {
-        return this.httpService
-          .get<httpJokeResponse>(this.randomJokeUrl, {
-            headers: {
-              accept: 'application/json',
-              'X-RapidAPI-Key': environment.api_key,
-              'X-RapidAPI-Host': environment.host,
-            },
-          })
-          .pipe(map(this.generateRandomJoke), takeUntil(this.onDestroy$));
-      })
-    );
-
-    this.getCategoriesObservable$ = this.getCategories$.pipe(
-      exhaustMap(() => {
-        console.log('call');
-        return this.httpService
-          .get<string[]>(this.categoriesUrl, {
-            headers: {
-              accept: 'application/json',
-              'X-RapidAPI-Key': environment.api_key,
-              'X-RapidAPI-Host': environment.host,
-            },
-          })
-          .pipe(takeUntil(this.onDestroy$));
-      })
-    );
-  }
-
-  public categories: string[] = [];
-
-  public randomJokeObservable$: Observable<Joke | null> = new Observable();
-  private randomJoke$ = new Subject();
-
-  public getCategoriesObservable$: Observable<string[] | null> =
-    new Observable();
-  private getCategories$ = new Subject();
-
-  private onDestroy$ = new Subject<boolean>();
+  constructor(private httpService: HttpClient) {}
 
   private randomJokeUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random';
@@ -58,11 +18,47 @@ export class FactService {
   private categoriesUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories';
 
-  getRandomJoke() {
+  public categories: string[] = [];
+  private randomJoke$ = new Subject<null | string>();
+  private getCategories$ = new Subject();
+
+  public randomJokeObservable$: Observable<Joke | null> = this.randomJoke$.pipe(
+    exhaustMap(() => {
+      return this.httpService
+        .get<httpJokeResponse>(this.randomJokeUrl, {
+          headers: {
+            accept: 'application/json',
+            'X-RapidAPI-Key': environment.api_key,
+            'X-RapidAPI-Host': environment.host,
+          },
+        })
+        .pipe(map(this.generateRandomJoke));
+    })
+  );
+
+  public getCategoriesObservable$: Observable<string[] | null> =
+    this.getCategories$.pipe(
+      exhaustMap(() => {
+        console.log('call');
+        return this.httpService.get<string[]>(this.categoriesUrl, {
+          headers: {
+            accept: 'application/json',
+            'X-RapidAPI-Key': environment.api_key,
+            'X-RapidAPI-Host': environment.host,
+          },
+        });
+      })
+    );
+
+  public getRandomJoke(category?: string) {
+    console.log(category);
+    if (category) {
+    }
+
     this.randomJoke$.next(null);
   }
 
-  getCategories() {
+  public getCategories() {
     this.getCategories$.next(null);
   }
 
@@ -76,8 +72,5 @@ export class FactService {
     return randomJoke;
   }
 
-  ngOnDestroy() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
-  }
+  ngOnDestroy() {}
 }

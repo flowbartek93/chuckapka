@@ -1,15 +1,27 @@
 <div class="menu">
   <label for="search">Search for joke</label>
-  <input id="search" type="text" class="search" />
+  <input
+    id="search"
+    #search="ngModel"
+    [(ngModel)]="searchValue"
+    type="text"
+    class="search"
+  />
 
   <label for="category">Choose category</label>
 
-  <select id="category">
+  <select
+    id="category"
+    (ngModelChange)="selectCategory($event)"
+    #categoryField="ngModel"
+    ngModel
+  >
+    <option value="" selected>Select category...</option>
     <option *ngFor="let category of categories$ | async" [value]="category">
       {{ category }}
     </option>
   </select>
 
-  <button>Search</button>
+  <button class="search-btn" (click)="onSearchJoke()">Search</button>
   <button (click)="downloadRandomJoke()">Random joke</button>
 </div>
