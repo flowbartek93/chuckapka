@@ -13,15 +13,37 @@ import { FactService } from '../fact.service';
 export class UserPanelComponent implements OnInit {
   constructor(private factService: FactService) {}
 
-  categories$: Observable<string[] | null> = new Observable();
+  categories$: Observable<string[] | null> =
+    this.factService.getCategoriesObservable$;
+
+  searchValue?: string;
+  selectedCategory?: string;
 
   public downloadRandomJoke(): void {
-    this.factService.getRandomJoke();
+    if (this.selectedCategory) {
+      this.factService.getRandomJoke(this.selectedCategory);
+    } else {
+      this.factService.getRandomJoke();
+    }
   }
 
-  ngOnInit(): void {
-    this.categories$ = this.factService.getCategoriesObservable$;
+  onSearchJoke() {
+    console.log(this.searchValue);
   }
+
+  selectCategory(category: string) {
+    if (category) {
+      console.log(category);
+      this.selectedCategory = category;
+    }
+
+    if (category === '') {
+      console.log(category);
+      this.selectedCategory = undefined;
+    }
+  }
+
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.factService.getCategories(); //poczytać o tym
