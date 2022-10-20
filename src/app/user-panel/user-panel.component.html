@@ -15,8 +15,9 @@
     (ngModelChange)="selectCategory($event)"
     #categoryField="ngModel"
     ngModel
+    [ngModel]="'empty'"
   >
-    <option value="" selected>Select category...</option>
+    <option value="empty" selected>Select category...</option>
     <option *ngFor="let category of categories$ | async" [value]="category">
       {{ category }}
     </option>

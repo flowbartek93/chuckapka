@@ -32,13 +32,11 @@ export class UserPanelComponent implements OnInit {
   }
 
   selectCategory(category: string) {
-    if (category) {
-      console.log(category);
+    if (category !== 'empty') {
       this.selectedCategory = category;
     }
 
-    if (category === '') {
-      console.log(category);
+    if (category === 'empty') {
       this.selectedCategory = undefined;
     }
   }
