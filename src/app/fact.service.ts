@@ -58,11 +58,13 @@ export class FactService {
     );
 
   public getRandomJoke(category?: string) {
+    if (!category) {
+      this.randomJoke$.next(null);
+    }
+
     if (category) {
       this.randomJoke$.next(category);
     }
-
-    this.randomJoke$.next(null);
   }
 
   public getCategories() {
