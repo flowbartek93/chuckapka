@@ -18,12 +18,15 @@ export class FactService {
   private categoriesUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories';
 
+  private searchUrl = 'https://api.chucknorris.io/jokes/search';
+
   public categories: string[] = [];
   private randomJoke$ = new Subject<null | string>();
   private getCategories$ = new Subject();
+  private getJokeByPhrase$ = new Subject<string>();
 
   public randomJokeObservable$: Observable<Joke | null> = this.randomJoke$.pipe(
-    exhaustMap((category) => {
+    exhaustMap((category: string | null) => {
       let categoryQuery;
       if (category) {
         const httpParams = new HttpParams();
@@ -40,7 +43,7 @@ export class FactService {
             'X-RapidAPI-Host': environment.host,
           },
         })
-        .pipe(map(this.generateRandomJoke));
+        .pipe(map(this.mapToJoke));
     })
   );
 
@@ -54,6 +57,27 @@ export class FactService {
             'X-RapidAPI-Host': environment.host,
           },
         });
+      })
+    );
+
+  public searchedJokeObservable$: Observable<Joke | null> =
+    this.getJokeByPhrase$.pipe(
+      exhaustMap((searchPhrase: string) => {
+        let searchQuery;
+
+        const httpParams = new HttpParams();
+        searchQuery = httpParams.append('query', searchPhrase);
+
+        return this.httpService
+          .get<httpJokeResponse>(this.searchUrl, {
+            params: searchQuery,
+            headers: {
+              accept: 'application/json',
+              'X-RapidAPI-Key': environment.api_key,
+              'X-RapidAPI-Host': environment.host,
+            },
+          })
+          .pipe(map(this.mapToJoke));
       })
     );
 
@@ -71,7 +95,11 @@ export class FactService {
     this.getCategories$.next(null);
   }
 
-  private generateRandomJoke(res: httpJokeResponse): Joke {
+  public getJokeBySearchPhrase(searchPhrase: string) {
+    this.getJokeByPhrase$.next(searchPhrase);
+  }
+
+  private mapToJoke(res: httpJokeResponse): Joke {
     const randomJoke: Joke = {
       text: res.value,
       id: res.id,

@@ -17,7 +17,7 @@
     ngModel
     [ngModel]="'empty'"
   >
-    <option value="empty" selected>Select category...</option>
+    <option value="empty">Select category...</option>
     <option *ngFor="let category of categories$ | async" [value]="category">
       {{ category }}
     </option>

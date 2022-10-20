@@ -12,10 +12,14 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ChuckFactComponent implements OnInit {
   constructor(private factService: FactService) {
-    this.joke$ = this.factService.randomJokeObservable$;
+    this.randomJoke$ = this.factService.randomJokeObservable$;
+    this.searchedJoke$ = this.factService.searchedJokeObservable$;
   }
 
-  joke$: Observable<Joke | null> = new Observable();
+  randomJoke$: Observable<Joke | null> = new Observable();
+  searchedJoke$: Observable<Joke | null> = new Observable();
+
+  //searchedJoke nie zwaraca wcale Joke a tablice result[] znalezionych i total hits...
 
   ngOnInit(): void {}
 }

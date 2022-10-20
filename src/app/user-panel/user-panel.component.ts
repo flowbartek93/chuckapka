@@ -28,7 +28,9 @@ export class UserPanelComponent implements OnInit {
   }
 
   onSearchJoke() {
-    console.log(this.searchValue);
+    if (this.searchValue) {
+      this.factService.getJokeBySearchPhrase(this.searchValue);
+    }
   }
 
   selectCategory(category: string) {
