@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Joke } from './models/joke.model';
 import { exhaustMap, map, takeUntil } from 'rxjs/operators';
@@ -23,12 +23,20 @@ export class FactService {
   private getCategories$ = new Subject();
 
   public randomJokeObservable$: Observable<Joke | null> = this.randomJoke$.pipe(
-    exhaustMap(() => {
+    exhaustMap((category) => {
+      let categoryQuery;
+      if (category) {
+        const httpParams = new HttpParams();
+        categoryQuery = httpParams.append('category', category);
+      }
+
       return this.httpService
         .get<httpJokeResponse>(this.randomJokeUrl, {
+          params: categoryQuery,
           headers: {
             accept: 'application/json',
             'X-RapidAPI-Key': environment.api_key,
+
             'X-RapidAPI-Host': environment.host,
           },
         })
@@ -39,7 +47,6 @@ export class FactService {
   public getCategoriesObservable$: Observable<string[] | null> =
     this.getCategories$.pipe(
       exhaustMap(() => {
-        console.log('call');
         return this.httpService.get<string[]>(this.categoriesUrl, {
           headers: {
             accept: 'application/json',
@@ -51,8 +58,8 @@ export class FactService {
     );
 
   public getRandomJoke(category?: string) {
-    console.log(category);
     if (category) {
+      this.randomJoke$.next(category);
     }
 
     this.randomJoke$.next(null);
