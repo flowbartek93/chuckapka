@@ -1,2 +1,3 @@
 <p>{{ (randomJoke$ | async)?.text }}</p>
-<p>{{ (searchedJoke$ | async)?.text }}</p>
+
+<app-table [response]="searchedJoke$ | async"></app-table>

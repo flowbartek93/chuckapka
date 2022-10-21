@@ -4,6 +4,8 @@ import {} from '@angular/core';
 import { FactService } from '../fact.service';
 import { Joke } from '../models/joke.model';
 import { Observable, Subscription } from 'rxjs';
+import { httpJokeResponse } from '../models/httpJokeResponse.model';
+import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 
 @Component({
   selector: 'app-chuck-fact',
@@ -11,15 +13,11 @@ import { Observable, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChuckFactComponent implements OnInit {
-  constructor(private factService: FactService) {
-    this.randomJoke$ = this.factService.randomJokeObservable$;
-    this.searchedJoke$ = this.factService.searchedJokeObservable$;
-  }
+  constructor(private factService: FactService) {}
 
-  randomJoke$: Observable<Joke | null> = new Observable();
-  searchedJoke$: Observable<Joke | null> = new Observable();
-
-  //searchedJoke nie zwaraca wcale Joke a tablice result[] znalezionych i total hits...
+  randomJoke$: Observable<Joke | null> = this.factService.randomJokeObservable$;
+  searchedJoke$: Observable<httpSearchJokeResponse> =
+    this.factService.searchedJokeObservable$;
 
   ngOnInit(): void {}
 }

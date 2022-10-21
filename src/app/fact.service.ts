@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, pluck } from 'rxjs';
 import { Joke } from './models/joke.model';
 import { exhaustMap, map, takeUntil } from 'rxjs/operators';
 import { httpJokeResponse } from './models/httpJokeResponse.model';
 import { environment } from 'src/environments/environment';
+import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +61,7 @@ export class FactService {
       })
     );
 
-  public searchedJokeObservable$: Observable<Joke | null> =
+  public searchedJokeObservable$: Observable<httpSearchJokeResponse> =
     this.getJokeByPhrase$.pipe(
       exhaustMap((searchPhrase: string) => {
         let searchQuery;
@@ -68,16 +69,14 @@ export class FactService {
         const httpParams = new HttpParams();
         searchQuery = httpParams.append('query', searchPhrase);
 
-        return this.httpService
-          .get<httpJokeResponse>(this.searchUrl, {
-            params: searchQuery,
-            headers: {
-              accept: 'application/json',
-              'X-RapidAPI-Key': environment.api_key,
-              'X-RapidAPI-Host': environment.host,
-            },
-          })
-          .pipe(map(this.mapToJoke));
+        return this.httpService.get<httpSearchJokeResponse>(this.searchUrl, {
+          params: searchQuery,
+          headers: {
+            accept: 'application/json',
+            'X-RapidAPI-Key': environment.api_key,
+            'X-RapidAPI-Host': environment.host,
+          },
+        });
       })
     );
 
