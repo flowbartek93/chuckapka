@@ -1,23 +1,14 @@
-<form #userPanelForm="ngForm">
+<form [formGroup]="form">
   <div class="menu">
     <label for="search">Search for joke</label>
-    <input
-      id="search"
-      #search="ngModel"
-      name="search"
-      [(ngModel)]="searchValue"
-      type="text"
-      class="search"
-    />
+    <input id="search" formControlName="search" type="text" class="search" />
 
     <label for="category">Choose category</label>
 
     <select
       id="category"
-      name="category"
       (ngModelChange)="selectCategory($event)"
-      #categoryField="ngModel"
-      [ngModel]="'empty'"
+      formControlName="category"
     >
       <option value="empty">Select category...</option>
       <option *ngFor="let category of categories$ | async" [value]="category">

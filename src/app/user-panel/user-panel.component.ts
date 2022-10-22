@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { FactService } from '../fact.service';
+import { userInput } from '../models/userInput.model';
 
 @Component({
   selector: 'app-user-panel',
@@ -18,6 +20,11 @@ export class UserPanelComponent implements OnInit {
 
   searchValue?: string;
   selectedCategory?: string;
+
+  form: FormGroup<userInput> = new FormGroup<userInput>({
+    search: new FormControl<string>('', { nonNullable: true }),
+    category: new FormControl<string>('empty', { nonNullable: true }),
+  });
 
   public downloadRandomJoke(): void {
     if (this.selectedCategory) {

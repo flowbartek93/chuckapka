@@ -4,12 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ChuckFactComponent } from './chuck-fact/chuck-fact.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
 
 @NgModule({
-  declarations: [AppComponent, ChuckFactComponent, UserPanelComponent, TableComponent],
-  imports: [BrowserModule, HttpClientModule, FormsModule],
+  declarations: [
+    AppComponent,
+    ChuckFactComponent,
+    UserPanelComponent,
+    TableComponent,
+  ],
+  imports: [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
