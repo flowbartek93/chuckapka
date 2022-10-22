@@ -11,15 +11,17 @@ export class TableComponent implements OnInit {
   totalHits?: number;
   results?: httpJokeResponse[];
 
-  private _response: any;
+  private _response: httpSearchJokeResponse | null = null;
 
   @Input() public get response() {
     return this._response;
   }
 
   set response(response: httpSearchJokeResponse | null) {
-    this.totalHits = response?.total;
-    this.results = response?.result;
+    if (response) {
+      this.totalHits = response?.total;
+      this.results = response?.result;
+    }
   }
 
   constructor() {}
