@@ -2,21 +2,24 @@
   <div class="menu">
     <label for="search">Search for joke</label>
     <input id="search" formControlName="search" type="text" class="search" />
-
+    <p class="search-error" *ngIf="!searchValue?.valid">Please provide value</p>
     <label for="category">Choose category</label>
 
-    <select
-      id="category"
-      (ngModelChange)="selectCategory($event)"
-      formControlName="category"
-    >
-      <option value="empty">Select category...</option>
+    <select id="category" formControlName="category">
+      <option value="">Select category...</option>
       <option *ngFor="let category of categories$ | async" [value]="category">
         {{ category }}
       </option>
     </select>
 
-    <button class="search-btn" (click)="onSearchJoke()">Search</button>
+    <button
+      [ngClass]="{ disabled: !searchValue?.valid }"
+      class="search-btn"
+      [disabled]="!searchValue?.valid"
+      (click)="onSearchJoke()"
+    >
+      Search
+    </button>
     <button (click)="downloadRandomJoke()">Random joke</button>
   </div>
 </form>

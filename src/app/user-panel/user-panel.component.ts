@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { FactService } from '../fact.service';
@@ -18,35 +18,34 @@ export class UserPanelComponent implements OnInit {
   categories$: Observable<string[] | null> =
     this.factService.getCategoriesObservable$;
 
-  searchValue?: string;
-  selectedCategory?: string;
+  get searchValue() {
+    return this.form.get('search');
+  }
+
+  get selectedCategory() {
+    return this.form.get('category');
+  }
 
   form: FormGroup<userInput> = new FormGroup<userInput>({
-    search: new FormControl<string>('', { nonNullable: true }),
-    category: new FormControl<string>('empty', { nonNullable: true }),
+    search: new FormControl(null, [Validators.required]),
+    category: new FormControl('', {
+      nonNullable: true,
+    }),
   });
 
   public downloadRandomJoke(): void {
     if (this.selectedCategory) {
-      this.factService.getRandomJoke(this.selectedCategory);
+      this.factService.getRandomJoke(this.selectedCategory.value);
     } else {
       this.factService.getRandomJoke();
     }
   }
 
   onSearchJoke() {
-    if (this.searchValue) {
-      this.factService.getJokeBySearchPhrase(this.searchValue);
-    }
-  }
+    if (this.searchValue?.value) {
+      this.factService.getJokeBySearchPhrase(this.searchValue.value);
 
-  selectCategory(category: string) {
-    if (category !== 'empty') {
-      this.selectedCategory = category;
-    }
-
-    if (category === 'empty') {
-      this.selectedCategory = undefined;
+      console.log(this.searchValue);
     }
   }
 
