@@ -1,7 +1,81 @@
 .search-error {
   color: red;
+  margin: 0 auto;
 }
 
 .disabled {
   color: gray;
+}
+
+.menu {
+  margin: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+label,
+p {
+  padding: 4px 0px;
+
+  color: rgb(149, 119, 71);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.search-panel {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-panel {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu > div {
+  padding: 10px 0;
+}
+
+select {
+  border: 2px solid rgb(149, 119, 71);
+  height: 40px;
+  width: 200px;
+  outline: none;
+  border-radius: 3px;
+  font-size: 18px;
+  color: rgb(190, 152, 90);
+}
+
+.search {
+  border: 2px solid rgb(149, 119, 71);
+  height: 40px;
+  width: 200px;
+  outline: none;
+  font-size: 18px;
+  border-radius: 3px;
+  color: rgb(190, 152, 90);
+}
+
+.buttons-panel {
+  display: flex;
+}
+
+button {
+  margin: 5px;
+  height: 50px;
+  width: 100px;
+  color: rgb(230, 194, 138);
+  background-color: black;
+  border: 2px solid rgb(149, 119, 71);
+  cursor: pointer;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: rgba(230, 195, 138, 0.397);
 }

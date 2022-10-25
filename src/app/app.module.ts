@@ -6,6 +6,7 @@ import { ChuckFactComponent } from './chuck-fact/chuck-fact.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,13 @@ import { TableComponent } from './table/table.component';
     UserPanelComponent,
     TableComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
