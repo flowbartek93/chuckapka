@@ -1,12 +1,16 @@
-<table style="width: 50%">
-  <tr>
-    <th>joke</th>
-    <th>date</th>
-    <th>id</th>
-  </tr>
-  <tr *ngFor="let result of results; let i = index">
-    <td>{{ result.value }}</td>
-    <td>{{ result.created_at }}</td>
-    <td>{{ result.id }}</td>
-  </tr>
-</table>
+<ng-container *ngIf="searchedJoke$ | async as response">
+  <div class="joke-table">
+    <table style="width: 50%">
+      <tr>
+        <th>joke</th>
+        <th>date</th>
+        <th>id</th>
+      </tr>
+      <tr *ngFor="let result of response?.result; let i = index">
+        <td>{{ result.value }}</td>
+        <td>{{ result.created_at }}</td>
+        <td>{{ result.id }}</td>
+      </tr>
+    </table>
+  </div>
+</ng-container>

@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { FactService } from '../fact.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
 import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 
@@ -6,25 +13,24 @@ import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-  totalHits?: number;
-  results?: httpJokeResponse[];
+  // @Input() public get response(): httpSearchJokeResponse | null {
+  //   return this._response;
+  // }
 
-  private _response: httpSearchJokeResponse | null = null;
+  // set response(response: httpSearchJokeResponse | null) {
+  //   if (response) {
+  //     this.totalHits = response?.total;
+  //     this.results = response?.result;
+  //   }
+  // }
 
-  @Input() public get response() {
-    return this._response;
-  }
+  constructor(private factService: FactService) {}
 
-  set response(response: httpSearchJokeResponse | null) {
-    if (response) {
-      this.totalHits = response?.total;
-      this.results = response?.result;
-    }
-  }
-
-  constructor() {}
+  searchedJoke$: Observable<httpSearchJokeResponse> =
+    this.factService.searchedJokeObservable$;
 
   ngOnInit(): void {}
 }

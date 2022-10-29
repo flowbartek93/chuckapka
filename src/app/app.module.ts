@@ -7,6 +7,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
 import { AppRoutingModule } from './app.routing.module';
+import { JokeEditorComponent } from './joke-editor/joke-editor.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AppRoutingModule } from './app.routing.module';
     ChuckFactComponent,
     UserPanelComponent,
     TableComponent,
+    JokeEditorComponent,
   ],
   imports: [
     BrowserModule,

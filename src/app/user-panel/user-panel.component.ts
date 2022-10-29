@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { FactService } from '../fact.service';
@@ -13,7 +14,7 @@ import { userInput } from '../models/userInput.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPanelComponent implements OnInit {
-  constructor(private factService: FactService) {}
+  constructor(private factService: FactService, private router: Router) {}
 
   categories$: Observable<string[] | null> =
     this.factService.getCategoriesObservable$;
@@ -34,25 +35,29 @@ export class UserPanelComponent implements OnInit {
   });
 
   public downloadRandomJoke(): void {
-    if (this.selectedCategory) {
-      this.factService.getRandomJoke(this.selectedCategory.value);
-    } else {
-      this.factService.getRandomJoke();
-    }
+    this.router.navigateByUrl('joke-editor').then(() => {
+      if (this.selectedCategory) {
+        this.factService.getRandomJoke(this.selectedCategory.value);
+      } else {
+        this.factService.getRandomJoke();
+      }
+    });
   }
 
   onSearchJoke() {
-    if (this.searchValue?.value) {
-      this.factService.getJokeBySearchPhrase(this.searchValue.value);
-
-      console.log(this.searchValue);
-    }
+    this.router.navigateByUrl('table').then(() => {
+      this.factService.getJokeBySearchPhrase(this.searchValue?.value ?? '');
+    });
   }
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.factService.getCategories(); //poczytać o tym
+  }
+
+  ngDoCheck() {
+    console.log('change detection');
   }
 
   ngOnDestroy() {}
