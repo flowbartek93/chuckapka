@@ -35,19 +35,16 @@ export class UserPanelComponent implements OnInit {
   });
 
   public downloadRandomJoke(): void {
-    this.router.navigateByUrl('joke-editor').then(() => {
-      if (this.selectedCategory) {
-        this.factService.getRandomJoke(this.selectedCategory.value);
-      } else {
-        this.factService.getRandomJoke();
-      }
+    this.router.navigate(['joke-editor'], {
+      queryParams: { category: this.selectedCategory?.value },
     });
   }
 
   onSearchJoke() {
-    this.router.navigateByUrl('table').then(() => {
-      this.factService.getJokeBySearchPhrase(this.searchValue?.value ?? '');
-    });
+    if (this.searchValue?.value) {
+      const searchValue = this.searchValue?.value;
+      this.factService.getJokeBySearchPhrase(searchValue);
+    }
   }
 
   ngOnInit(): void {}

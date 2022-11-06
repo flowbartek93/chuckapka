@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FactService } from '../fact.service';
 import { Joke } from '../models/joke.model';
@@ -7,11 +8,27 @@ import { Joke } from '../models/joke.model';
   selector: 'app-joke-editor',
   templateUrl: './joke-editor.component.html',
   styleUrls: ['./joke-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JokeEditorComponent implements OnInit {
-  constructor(private factService: FactService) {}
+  constructor(
+    private factService: FactService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   randomJoke$: Observable<Joke | null> = this.factService.randomJokeObservable$;
 
-  ngOnInit(): void {}
+  ngAfterViewInit() {
+    this.activatedRoute.queryParams.subscribe(({ category }) => {
+      if (category) {
+        this.factService.getRandomJoke(category);
+      } else {
+        this.factService.getRandomJoke();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    console.log('ngoninit');
+  }
 }

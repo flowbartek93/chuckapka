@@ -6,12 +6,13 @@ import { exhaustMap, map } from 'rxjs/operators';
 import { httpJokeResponse } from './models/httpJokeResponse.model';
 import { environment } from 'src/environments/environment';
 import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FactService {
-  constructor(private httpService: HttpClient) {}
+  constructor(private httpService: HttpClient, private router: Router) {}
 
   private randomJokeUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random';
@@ -86,6 +87,7 @@ export class FactService {
     }
 
     if (category) {
+      console.log('helloł');
       this.randomJoke$.next(category);
     }
   }
