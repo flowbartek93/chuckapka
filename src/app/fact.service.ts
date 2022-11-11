@@ -87,7 +87,6 @@ export class FactService {
     }
 
     if (category) {
-      console.log('helloł');
       this.randomJoke$.next(category);
     }
   }

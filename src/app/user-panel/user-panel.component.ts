@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 import { FactService } from '../fact.service';
 import { userInput } from '../models/userInput.model';
@@ -14,7 +14,13 @@ import { userInput } from '../models/userInput.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPanelComponent implements OnInit {
-  constructor(private factService: FactService, private router: Router) {}
+  public navigationSubscription: Subscription = new Subscription();
+
+  constructor(
+    private factService: FactService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   categories$: Observable<string[] | null> =
     this.factService.getCategoriesObservable$;
@@ -35,16 +41,22 @@ export class UserPanelComponent implements OnInit {
   });
 
   public downloadRandomJoke(): void {
-    this.router.navigate(['joke-editor'], {
-      queryParams: { category: this.selectedCategory?.value },
+    this.router.navigateByUrl('').then(() => {
+      this.router.navigate(['joke-editor'], {
+        queryParams: { category: this.selectedCategory?.value },
+        skipLocationChange: true,
+      });
     });
   }
 
   onSearchJoke() {
-    if (this.searchValue?.value) {
-      const searchValue = this.searchValue?.value;
-      this.factService.getJokeBySearchPhrase(searchValue);
-    }
+    console.log(this.searchValue?.value);
+    this.router.navigateByUrl('').then(() => {
+      this.router.navigate(['table'], {
+        queryParams: { searchPhrase: this.searchValue?.value },
+        skipLocationChange: true,
+      });
+    });
   }
 
   ngOnInit(): void {}
@@ -53,9 +65,7 @@ export class UserPanelComponent implements OnInit {
     this.factService.getCategories(); //poczytać o tym
   }
 
-  ngDoCheck() {
-    console.log('change detection');
-  }
+  ngDoCheck() {}
 
   ngOnDestroy() {}
 }

@@ -1,1 +1,5 @@
-<p>{{ (randomJoke$ | async)?.text }}</p>
+<div class="joke-text-area">
+  <textarea id="text" name="joke-text" rows="5" cols="50">{{
+    (randomJoke$ | async)?.text
+  }}</textarea>
+</div>

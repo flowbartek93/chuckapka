@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FactService } from '../fact.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
@@ -27,10 +28,21 @@ export class TableComponent implements OnInit {
   //   }
   // }
 
-  constructor(private factService: FactService) {}
+  constructor(
+    private factService: FactService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   searchedJoke$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.activatedRoute.queryParams.subscribe(({ searchPhrase }) => {
+      if (searchPhrase) {
+        this.factService.getJokeBySearchPhrase(searchPhrase);
+      }
+    });
+  }
 }
