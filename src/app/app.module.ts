@@ -8,6 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './table/table.component';
 import { AppRoutingModule } from './app.routing.module';
 import { JokeEditorComponent } from './joke-editor/joke-editor.component';
+import { StoreModule } from '@ngrx/store';
+import { jokeFeatureKey, reducer } from './store/jokes.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,10 @@ import { JokeEditorComponent } from './joke-editor/joke-editor.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(jokeFeatureKey, reducer),
+    StoreDevtoolsModule.instrument(),
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

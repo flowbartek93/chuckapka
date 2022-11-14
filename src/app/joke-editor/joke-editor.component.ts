@@ -28,7 +28,5 @@ export class JokeEditorComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log('ngoninit');
-  }
+  ngOnInit(): void {}
 }

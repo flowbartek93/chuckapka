@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { FactService } from '../fact.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
 import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
-
+import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -17,21 +17,12 @@ import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-  // @Input() public get response(): httpSearchJokeResponse | null {
-  //   return this._response;
-  // }
-
-  // set response(response: httpSearchJokeResponse | null) {
-  //   if (response) {
-  //     this.totalHits = response?.total;
-  //     this.results = response?.result;
-  //   }
-  // }
-
   constructor(
     private factService: FactService,
     private activatedRoute: ActivatedRoute
   ) {}
+
+  public faPlus: IconDefinition = faPlus;
 
   searchedJoke$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
