@@ -10,6 +10,8 @@ import { FactService } from '../fact.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
 import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import * as actions from './../store/jokes.actions';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -18,6 +20,7 @@ import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class TableComponent implements OnInit {
   constructor(
+    private store$: Store,
     private factService: FactService,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -35,5 +38,9 @@ export class TableComponent implements OnInit {
         this.factService.getJokeBySearchPhrase(searchPhrase);
       }
     });
+  }
+
+  onAddJokeToStore(jokeData: httpJokeResponse) {
+    this.store$.dispatch(actions.addSingleJoke({ joke: jokeData }));
   }
 }
