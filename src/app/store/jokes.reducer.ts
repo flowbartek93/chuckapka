@@ -13,7 +13,15 @@ export const initialState: jokeState = {
   list: [],
 };
 
-export const jokeReducer = createReducer(initialState);
+export const jokeReducer = createReducer(
+  initialState,
+
+  on(jokeActions.addSingleJokeSuccess, (state, props) => {
+    return {
+      ...state,
+    };
+  })
+);
 
 export function reducer(state: jokeState | undefined, action: Action) {
   return jokeReducer(state, action);

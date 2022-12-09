@@ -7,3 +7,8 @@ export const addSingleJoke = createAction(
   '[joke app] adding to store',
   props<{ joke: httpJokeResponse }>()
 );
+
+export const addSingleJokeSuccess = createAction(
+  '[joke app] adding to store success',
+  props<{ joke: httpJokeResponse }>()
+);

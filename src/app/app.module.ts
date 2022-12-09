@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { jokeFeatureKey, reducer } from './store/jokes.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EffectsModule } from '@ngrx/effects';
+import { JokeEffects } from './store/jokes.effects';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppRoutingModule,
     StoreModule.forRoot({}),
     StoreModule.forFeature(jokeFeatureKey, reducer),
+    EffectsModule.forRoot([JokeEffects]),
     StoreDevtoolsModule.instrument(),
     FontAwesomeModule,
   ],
