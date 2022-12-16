@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EffectsModule } from '@ngrx/effects';
 import { JokeEffects } from './store/jokes.effects';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { JokeEffects } from './store/jokes.effects';
     UserPanelComponent,
     TableComponent,
     JokeEditorComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
