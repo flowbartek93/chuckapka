@@ -8,6 +8,7 @@ export const jokeFeatureKey = 'Jokes';
 
 interface jokeState {
   list: EntityState<Joke>;
+  editedJokes: EntityState<Joke>;
 }
 
 export const jokeAdapter: EntityAdapter<Joke> = createEntityAdapter({
@@ -18,12 +19,13 @@ export const jokeAdapter: EntityAdapter<Joke> = createEntityAdapter({
 
 export const initialState: jokeState = {
   list: jokeAdapter.getInitialState(),
+  editedJokes: jokeAdapter.getInitialState(),
 };
 
 export const jokeReducer = createReducer(
   initialState,
 
-  on(jokeActions.addSingleJokeSuccess, (state, props) => {
+  on(jokeActions.addSingleJokeSuccess, (state, props): jokeState => {
     return {
       ...state,
       list: jokeAdapter.setOne(props.joke, state.list),

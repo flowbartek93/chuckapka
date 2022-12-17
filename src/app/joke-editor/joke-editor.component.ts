@@ -16,17 +16,18 @@ export class JokeEditorComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  randomJoke$: Observable<Joke | null> = this.factService.randomJokeObservable$;
+  // randomJoke$: Observable<Joke | null> = this.factService.randomJokeObservable$;
 
-  ngAfterViewInit() {
-    this.activatedRoute.queryParams.subscribe(({ category }) => {
-      if (category) {
-        this.factService.getRandomJoke(category);
-      } else {
-        this.factService.getRandomJoke();
-      }
-    });
-  }
+  // ngAfterViewInit() {
+  //   this.activatedRoute.queryParams.subscribe(({ category }) => {
+  //     if (category) {
+  //       this.factService.getRandomJoke(category);
+  //     } else {
+  //       console.log(category);
+  //       this.factService.getRandomJoke();
+  //     }
+  //   });
+  // }
 
   ngOnInit(): void {}
 }

@@ -1,5 +1,14 @@
 <div class="joke-text-area">
+  <label for="joke">Select joke to edit</label>
+  <select id="joke">
+    <!-- <option *ngFor="let category of categories$ | async" [value]="category">
+      {{ category }}
+    </option> -->
+  </select>
+
   <textarea id="text" name="joke-text" rows="5" cols="50">{{
     (randomJoke$ | async)?.text
   }}</textarea>
+
+  <button>Modify</button>
 </div>
