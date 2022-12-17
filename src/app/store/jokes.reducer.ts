@@ -6,7 +6,7 @@ import * as jokeActions from './jokes.actions';
 
 export const jokeFeatureKey = 'Jokes';
 
-interface jokeState {
+export interface jokeState {
   list: EntityState<Joke>;
   editedJokes: EntityState<Joke>;
 }
