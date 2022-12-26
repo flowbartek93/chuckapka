@@ -21,31 +21,38 @@ export class JokeEditorComponent implements OnInit {
   form: FormGroup<editionInput> = new FormGroup<editionInput>({
     selectedJoke: new FormControl(null, [Validators.required]),
     editedText: new FormControl('', Validators.required),
+    originalText: new FormControl(''),
   });
 
   get selectedJoke() {
-    return this.form.get('selectedJoke');
+    return this.form.get('selectedJoke')?.value;
   }
 
   get editedText() {
-    return this.form.get('editedText');
+    return this.form.get('editedText')?.value;
   }
 
   ngOnInit(): void {}
 
   onModify() {
-    //store distpach[mod. joke] -> editedJokes(store) ->
-
-    if (this.selectedJoke?.value) {
+    if (this.selectedJoke) {
       const modifiedJoke: Joke = {
-        ...this.selectedJoke?.value,
+        ...this.selectedJoke,
         createdDate: new Date().toLocaleString().replaceAll('.', '-'),
-        text: this.editedText?.value ? this.editedText.value : '',
+        text: this.editedText ? this.editedText : '',
       };
-
-      console.log(modifiedJoke);
 
       this.store$.dispatch(actions.modifySingleJoke({ joke: modifiedJoke }));
     }
+  }
+
+  onSelectChange(selectedJoke: Joke) {
+    this.form
+      .get('editedText')
+      ?.patchValue(selectedJoke.text, { emitEvent: false });
+
+    this.form
+      .get('originalText')
+      ?.patchValue(selectedJoke.text, { emitEvent: false });
   }
 }
