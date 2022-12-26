@@ -30,6 +30,13 @@ export const jokeReducer = createReducer(
       ...state,
       list: jokeAdapter.setOne(props.joke, state.list),
     };
+  }),
+
+  on(jokeActions.modifySingleJokeSuccess, (state, props): jokeState => {
+    return {
+      ...state,
+      editedJokes: jokeAdapter.setOne(props.joke, state.editedJokes),
+    };
   })
 );
 

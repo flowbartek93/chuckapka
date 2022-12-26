@@ -41,8 +41,6 @@ export class TableComponent implements OnInit {
   }
 
   onAddJokeToStore(jokeData: httpJokeResponse) {
-    console.log(jokeData);
-
     this.store$.dispatch(actions.addSingleJoke({ joke: jokeData }));
   }
 }
