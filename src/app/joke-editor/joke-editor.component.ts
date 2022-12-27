@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
-import { editionInput } from '../models/userInput.model';
+import { editionInput } from '../models/controls.model';
 import * as jokeSelectors from './../store/jokes.selectors';
 import * as actions from './../store/jokes.actions';
 import { Joke } from '../models/joke.model';
@@ -54,5 +54,9 @@ export class JokeEditorComponent implements OnInit {
     this.form
       .get('originalText')
       ?.patchValue(selectedJoke.text, { emitEvent: false });
+  }
+
+  public ngDoCheck() {
+    console.log('doCheck');
   }
 }

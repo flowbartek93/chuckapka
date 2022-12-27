@@ -43,4 +43,8 @@ export class TableComponent implements OnInit {
   onAddJokeToStore(jokeData: httpJokeResponse) {
     this.store$.dispatch(actions.addSingleJoke({ joke: jokeData }));
   }
+
+  public ngDoCheck() {
+    console.log('doCheck');
+  }
 }

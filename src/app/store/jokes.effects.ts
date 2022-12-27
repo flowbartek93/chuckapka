@@ -7,10 +7,7 @@ import * as jokeActions from './jokes.actions';
 
 @Injectable()
 export class JokeEffects {
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store<{}>
-  ) {}
+  constructor(private readonly actions$: Actions) {}
 
   $addJokeToStore$ = createEffect(() =>
     this.actions$.pipe(

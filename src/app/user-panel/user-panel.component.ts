@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { FactService } from '../fact.service';
-import { userInput } from '../models/userInput.model';
+import { userInput } from '../models/controls.model';
 
 @Component({
   selector: 'app-user-panel',
@@ -60,7 +60,7 @@ export class UserPanelComponent implements OnInit {
     this.factService.getCategories(); //poczytać o tym
   }
 
-  ngDoCheck() {}
-
-  ngOnDestroy() {}
+  public ngDoCheck() {
+    console.log('doCheck');
+  }
 }
