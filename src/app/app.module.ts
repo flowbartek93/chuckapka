@@ -32,7 +32,7 @@ import { HeaderComponent } from './header/header.component';
     StoreModule.forRoot({}),
     StoreModule.forFeature(jokeFeatureKey, reducer),
     EffectsModule.forRoot([JokeEffects]),
-    // StoreDevtoolsModule.instrument(),
+    StoreDevtoolsModule.instrument(),
     FontAwesomeModule,
   ],
   providers: [],

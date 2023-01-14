@@ -59,8 +59,4 @@ export class UserPanelComponent implements OnInit {
   ngAfterViewInit() {
     this.factService.getCategories(); //poczytać o tym
   }
-
-  public ngDoCheck() {
-    console.log('doCheck');
-  }
 }
