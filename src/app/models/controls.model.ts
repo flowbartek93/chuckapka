@@ -8,6 +8,4 @@ export interface userInput {
 
 export interface editionInput {
   selectedJoke: FormControl<Joke | null>;
-  editedText: FormControl<string | null>;
-  originalText: FormControl<string | null>;
 }
