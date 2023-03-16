@@ -7,7 +7,7 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
-import { editionInput } from 'src/app/models/controls.model';
+
 
 @Component({
   selector: 'app-compare-texts',
