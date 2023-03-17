@@ -1,4 +1,19 @@
-<ng-container [formGroup]="form">
+<div class="joke-text-area">
+  <div class="select-joke">
+    <label for="joke">Select joke to edit</label>
+    <select id="joke" required ngModel (ngModelChange)="onSelectChange($event)">
+      <option [ngValue]="null" selected disabled hidden>Select joke...</option>
+      <option *ngFor="let joke of pickedJokesList$ | async" [ngValue]="joke">
+        {{ joke.id }}
+      </option>
+    </select>
+  </div>
+
+  <compare-texts [originalText]="selectedJokeText"></compare-texts>
+</div>
+
+<!-- <ng-container [formGroup]="form">
+
   <div class="joke-text-area">
     <label for="joke">Select joke to edit</label>
     <select
@@ -35,4 +50,4 @@
 
     <button (click)="onModify()">Modify</button>
   </div>
-</ng-container>
+</ng-container> -->

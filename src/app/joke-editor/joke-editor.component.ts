@@ -25,21 +25,17 @@ export class JokeEditorComponent implements OnInit {
 
   pickedJokesList$ = this.store$.select(jokeSelectors.jokeList);
 
-  form: FormGroup<editionInput> = new FormGroup<editionInput>({
-    selectedJoke: new FormControl(null, [Validators.required]),
-    editedText: new FormControl('', Validators.required),
-    originalText: new FormControl(''),
-  });
+  // form: FormGroup = new FormGroup({
+  //   selectedJoke: new FormControl(null, [Validators.required]),
+  // });
 
-  _onDestroy$: Subject<boolean> = new Subject();
+  // _onDestroy$: Subject<boolean> = new Subject();
 
-  get selectedJoke() {
-    return this.form.get('selectedJoke')?.value;
-  }
+  public selectedJokeText: string | null = null;
 
-  get editedText() {
-    return this.form.get('editedText')?.value;
-  }
+  // get editedText() {
+  //   return this.form.get('editedText')?.value;
+  // }
 
   get editedJokes() {
     return this.jokeEditorService.editedJokes;
@@ -48,32 +44,35 @@ export class JokeEditorComponent implements OnInit {
   ngOnInit(): void {}
 
   onModify() {
-    if (this.selectedJoke) {
-      const modifiedJoke: Joke = {
-        ...this.selectedJoke,
-        createdDate: new Date().toLocaleString().replaceAll('.', '-'),
-        text: this.editedText ?? '',
-      };
-
-      this.store$.dispatch(actions.modifySingleJoke({ joke: modifiedJoke }));
-      this.jokeEditorService.getEditedJokesList();
-    }
+    // if (this.selectedJoke) {
+    //   const modifiedJoke: Joke = {
+    //     ...this.selectedJoke,
+    //     createdDate: new Date().toLocaleString().replaceAll('.', '-'),
+    //     text: this.editedText ?? '',
+    //   };
+    //   this.store$.dispatch(actions.modifySingleJoke({ joke: modifiedJoke }));
+    //   this.jokeEditorService.getEditedJokesList();
+    // }
   }
 
   onSelectChange(selectedJoke: Joke) {
-    const editedJoke = this.editedJokes.find((j) => j.id === selectedJoke.id);
+    if (selectedJoke.text) {
+      this.selectedJokeText = selectedJoke.text;
+    }
 
-    this.form
-      .get('originalText')
-      ?.patchValue(selectedJoke.text, { emitEvent: false });
+    // const editedJoke = this.editedJokes.find((j) => j.id === selectedJoke.id);
 
-    this.form
-      .get('editedText')
-      ?.patchValue(editedJoke?.text ?? selectedJoke.text, { emitEvent: false });
+    // this.form
+    //   .get('originalText')
+    //   ?.patchValue(selectedJoke.text, { emitEvent: false });
+
+    // this.form
+    //   .get('editedText')
+    //   ?.patchValue(editedJoke?.text ?? selectedJoke.text, { emitEvent: false });
   }
 
-  ngOnDestroy() {
-    this._onDestroy$.next(true);
-    this._onDestroy$.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this._onDestroy$.next(true);
+  //   this._onDestroy$.unsubscribe();
+  // }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormControl,
   FormGroup,
@@ -7,10 +8,11 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
+import { Observable, tap } from 'rxjs';
 import { editionInput } from 'src/app/models/controls.model';
 
 @Component({
-  selector: 'app-compare-texts',
+  selector: 'compare-texts',
   templateUrl: './compare-texts.component.html',
   styleUrls: ['./compare-texts.component.scss'],
   providers: [
@@ -29,16 +31,34 @@ import { editionInput } from 'src/app/models/controls.model';
 export class CompareTextsComponent implements OnInit, ControlValueAccessor {
   constructor() {}
 
+  @Input() originalText: string | null = null;
+
+  get originalTextControl(): AbstractControl | null {
+    return this.form.get('originalText');
+  }
+
   form: FormGroup = new FormGroup({
-    editedText: new FormControl('', Validators.required),
+    editedText: new FormControl(null, Validators.required),
     originalText: new FormControl(''),
   });
 
   ngOnInit(): void {}
 
-  onChange = () => {};
+  ngOnChanges() {
+    if (this.originalText) {
+      this.originalTextControl?.patchValue(this.originalText, {
+        emitEvent: false,
+      });
+    }
+  }
 
-  writeValue(text: string): void {}
+  onChange = (value: any) => {
+    console.log(value);
+  };
+
+  writeValue(text: string): void {
+    console.log(text);
+  }
 
   registerOnChange(onChange: any): void {
     this.onChange = onChange;

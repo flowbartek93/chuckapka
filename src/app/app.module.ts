@@ -23,7 +23,7 @@ import { CompareTextsComponent } from './shared/compare-texts/compare-texts.comp
     TableComponent,
     JokeEditorComponent,
     HeaderComponent,
-    CompareTextsComponent,
+    CompareTextsComponent, // TODO to powinno być jako moduł
   ],
   imports: [
     BrowserModule,

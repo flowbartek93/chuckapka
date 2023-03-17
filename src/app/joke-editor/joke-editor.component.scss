@@ -5,6 +5,7 @@
   align-items: center;
   margin: 5rem;
 }
+
 .text-panel {
   display: flex;
   flex-direction: row;
@@ -23,4 +24,9 @@
 
 .text-area:focus {
   outline: none !important;
+}
+
+.select-joke {
+  display: flex;
+  justify-content: center;
 }
