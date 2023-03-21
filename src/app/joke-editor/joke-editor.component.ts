@@ -1,14 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { Store } from '@ngrx/store';
-
-import { editionInput } from '../models/controls.model';
 import * as jokeSelectors from './../store/jokes.selectors';
-import * as actions from './../store/jokes.actions';
 import { Joke } from '../models/joke.model';
-import { Subject } from 'rxjs';
 import { JokeEditorService } from './joke-editor.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-joke-editor',
@@ -24,6 +19,8 @@ export class JokeEditorComponent implements OnInit {
   ) {}
 
   pickedJokesList$ = this.store$.select(jokeSelectors.jokeList);
+
+  public compareTextControl: FormControl = new FormControl('');
 
   // form: FormGroup = new FormGroup({
   //   selectedJoke: new FormControl(null, [Validators.required]),
@@ -59,6 +56,8 @@ export class JokeEditorComponent implements OnInit {
     if (selectedJoke.text) {
       this.selectedJokeText = selectedJoke.text;
     }
+
+    this.compareTextControl.patchValue(this.selectedJokeText);
 
     // const editedJoke = this.editedJokes.find((j) => j.id === selectedJoke.id);
 

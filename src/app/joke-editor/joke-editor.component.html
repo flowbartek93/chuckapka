@@ -9,45 +9,10 @@
     </select>
   </div>
 
-  <compare-texts [originalText]="selectedJokeText"></compare-texts>
+  <compare-texts
+    [formControl]="compareTextControl"
+    [originalText]="selectedJokeText"
+  ></compare-texts>
+
+  <button (click)="onModify()">Modify</button>
 </div>
-
-<!-- <ng-container [formGroup]="form">
-
-  <div class="joke-text-area">
-    <label for="joke">Select joke to edit</label>
-    <select
-      id="joke"
-      (ngModelChange)="onSelectChange($event)"
-      required
-      formControlName="selectedJoke"
-    >
-      <option [ngValue]="null" selected disabled hidden>Select joke...</option>
-      <option *ngFor="let joke of pickedJokesList$ | async" [ngValue]="joke">
-        {{ joke.id }}
-      </option>
-    </select>
-
-    <div class="text-panel">
-      <textarea
-        class="text-area"
-        formControlName="originalText"
-        id="originalInput"
-        name="joke-text-original"
-        rows="5"
-        cols="50"
-      ></textarea>
-
-      <textarea
-        formControlName="editedText"
-        class="text-area"
-        id="editedInput"
-        name="joke-text-edit"
-        rows="5"
-        cols="50"
-      ></textarea>
-    </div>
-
-    <button (click)="onModify()">Modify</button>
-  </div>
-</ng-container> -->

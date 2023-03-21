@@ -8,8 +8,7 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
-import { editionInput } from 'src/app/models/controls.model';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'compare-texts',
@@ -21,15 +20,14 @@ import { editionInput } from 'src/app/models/controls.model';
       multi: true,
       useExisting: CompareTextsComponent,
     },
-    {
-      provide: NG_VALIDATORS,
-      multi: true,
-      useExisting: CompareTextsComponent,
-    },
   ],
 })
 export class CompareTextsComponent implements OnInit, ControlValueAccessor {
-  constructor() {}
+  constructor() {
+    this.editedTextControl?.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((text) => console.log(text));
+  }
 
   @Input() originalText: string | null = null;
 
@@ -37,30 +35,33 @@ export class CompareTextsComponent implements OnInit, ControlValueAccessor {
     return this.form.get('originalText');
   }
 
+  get editedTextControl(): AbstractControl | null {
+    return this.form.get('editedText');
+  }
+
   form: FormGroup = new FormGroup({
-    editedText: new FormControl(null, Validators.required),
+    editedText: new FormControl(''),
     originalText: new FormControl(''),
   });
 
   ngOnInit(): void {}
-
-  ngOnChanges() {
-    if (this.originalText) {
-      this.originalTextControl?.patchValue(this.originalText, {
-        emitEvent: false,
-      });
-    }
-  }
 
   onChange = (value: any) => {
     console.log(value);
   };
 
   writeValue(text: string): void {
-    console.log(text);
+    this.originalTextControl?.patchValue(text, {
+      emitEvent: false,
+    });
+
+    this.editedTextControl?.patchValue(text, {
+      emitEvent: false,
+    });
   }
 
   registerOnChange(onChange: any): void {
+    console.log(onChange);
     this.onChange = onChange;
   }
 
