@@ -9,10 +9,7 @@
     </select>
   </div>
 
-  <compare-texts
-    [formControl]="compareTextControl"
-    [originalText]="selectedJokeText"
-  ></compare-texts>
+  <compare-texts [formControl]="compareTextControl"></compare-texts>
 
-  <button (click)="onModify()">Modify</button>
+  <button [disabled]="!modifyEnabled" (click)="onModify()">Modify</button>
 </div>

@@ -26,10 +26,8 @@ export class CompareTextsComponent implements OnInit, ControlValueAccessor {
   constructor() {
     this.editedTextControl?.valueChanges
       .pipe(distinctUntilChanged())
-      .subscribe((text) => console.log(text));
+      .subscribe((text) => this.onChange(text));
   }
-
-  @Input() originalText: string | null = null;
 
   get originalTextControl(): AbstractControl | null {
     return this.form.get('originalText');
@@ -46,9 +44,7 @@ export class CompareTextsComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {}
 
-  onChange = (value: any) => {
-    console.log(value);
-  };
+  onChange = (value: string) => {};
 
   writeValue(text: string): void {
     this.originalTextControl?.patchValue(text, {
@@ -61,7 +57,6 @@ export class CompareTextsComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnChange(onChange: any): void {
-    console.log(onChange);
     this.onChange = onChange;
   }
 

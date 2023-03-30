@@ -4,6 +4,7 @@ import * as jokeSelectors from './../store/jokes.selectors';
 import { Joke } from '../models/joke.model';
 import { JokeEditorService } from './joke-editor.service';
 import { FormControl } from '@angular/forms';
+import * as actions from './../store/jokes.actions';
 
 @Component({
   selector: 'app-joke-editor',
@@ -16,23 +17,24 @@ export class JokeEditorComponent implements OnInit {
   constructor(
     private store$: Store,
     private jokeEditorService: JokeEditorService
-  ) {}
+  ) {
+    this.compareTextControl.valueChanges.subscribe((v) => {
+      this.editedJokeText = v;
+      this.modifyEnabled = true;
+    });
+  }
 
   pickedJokesList$ = this.store$.select(jokeSelectors.jokeList);
 
   public compareTextControl: FormControl = new FormControl('');
 
-  // form: FormGroup = new FormGroup({
-  //   selectedJoke: new FormControl(null, [Validators.required]),
-  // });
-
-  // _onDestroy$: Subject<boolean> = new Subject();
-
   public selectedJokeText: string | null = null;
 
-  // get editedText() {
-  //   return this.form.get('editedText')?.value;
-  // }
+  private selectedJoke: Joke | null = null;
+
+  private editedJokeText: string | null = null;
+
+  public modifyEnabled = false;
 
   get editedJokes() {
     return this.jokeEditorService.editedJokes;
@@ -41,37 +43,26 @@ export class JokeEditorComponent implements OnInit {
   ngOnInit(): void {}
 
   onModify() {
-    // if (this.selectedJoke) {
-    //   const modifiedJoke: Joke = {
-    //     ...this.selectedJoke,
-    //     createdDate: new Date().toLocaleString().replaceAll('.', '-'),
-    //     text: this.editedText ?? '',
-    //   };
-    //   this.store$.dispatch(actions.modifySingleJoke({ joke: modifiedJoke }));
-    //   this.jokeEditorService.getEditedJokesList();
-    // }
+    if (this.editedJokeText && this.selectedJoke) {
+      const modifiedJoke: Joke = {
+        ...this.selectedJoke,
+        createdDate: new Date().toLocaleString().replaceAll('.', '-'),
+        text: this.editedJokeText,
+      };
+
+      this.store$.dispatch(actions.modifySingleJoke({ joke: modifiedJoke }));
+    }
   }
 
   onSelectChange(selectedJoke: Joke) {
+    this.selectedJoke = selectedJoke;
+
     if (selectedJoke.text) {
       this.selectedJokeText = selectedJoke.text;
     }
 
-    this.compareTextControl.patchValue(this.selectedJokeText);
-
-    // const editedJoke = this.editedJokes.find((j) => j.id === selectedJoke.id);
-
-    // this.form
-    //   .get('originalText')
-    //   ?.patchValue(selectedJoke.text, { emitEvent: false });
-
-    // this.form
-    //   .get('editedText')
-    //   ?.patchValue(editedJoke?.text ?? selectedJoke.text, { emitEvent: false });
+    this.compareTextControl.patchValue(this.selectedJokeText, {
+      emitEvent: false,
+    });
   }
-
-  // ngOnDestroy() {
-  //   this._onDestroy$.next(true);
-  //   this._onDestroy$.unsubscribe();
-  // }
 }
