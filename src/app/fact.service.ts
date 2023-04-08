@@ -4,15 +4,14 @@ import { Observable, Subject } from 'rxjs';
 import { Joke } from './models/joke.model';
 import { exhaustMap, map } from 'rxjs/operators';
 import { httpJokeResponse } from './models/httpJokeResponse.model';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FactService {
-  constructor(private httpService: HttpClient, private router: Router) {}
+  constructor(private httpService: HttpClient) {}
 
   private randomJokeUrl =
     'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random';
@@ -23,6 +22,7 @@ export class FactService {
   private searchUrl = 'https://api.chucknorris.io/jokes/search';
 
   public categories: string[] = [];
+
   private randomJoke$ = new Subject<null | string>();
   private getCategories$ = new Subject();
   private getJokeByPhrase$ = new Subject<string>();

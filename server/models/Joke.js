@@ -19,4 +19,4 @@ const JokeSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("joke", JokeSchema);
+export const Joke = mongoose.model("joke", JokeSchema);

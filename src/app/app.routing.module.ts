@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { JokeEditorComponent } from './joke-editor/joke-editor.component';
 import { TableComponent } from './table/table.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { ServiceComponent } from './service/service.component';
 
 const routes: Routes = [
   { path: '', component: UserPanelComponent },
   { path: 'joke-editor', component: JokeEditorComponent },
   { path: 'table', component: TableComponent },
+  { path: 'service', component: ServiceComponent },
 ];
 
 @NgModule({
