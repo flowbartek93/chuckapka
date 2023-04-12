@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { JokeEffects } from './store/jokes.effects';
 import { HeaderComponent } from './header/header.component';
 import { CompareTextsComponent } from './shared/compare-texts/compare-texts.component';
+import { ServiceComponent } from './service/service.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CompareTextsComponent } from './shared/compare-texts/compare-texts.comp
     TableComponent,
     JokeEditorComponent,
     HeaderComponent,
+    ServiceComponent,
     CompareTextsComponent, // TODO to powinno być jako moduł
   ],
   imports: [
