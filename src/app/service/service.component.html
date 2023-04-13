@@ -3,7 +3,7 @@
     <form [formGroup]="form">
       <input
         type="radio"
-        name="data-radio"
+        name="selection"
         id="store"
         value="Store"
         formControlName="selection"
@@ -12,7 +12,7 @@
 
       <input
         type="radio"
-        name="data-radio"
+        name="selection"
         id="server"
         value="Server"
         formControlName="selection"
@@ -21,6 +21,7 @@
     </form>
   </div>
 
+  <div class="table"></div>
   <!-- * table component -->
   <!-- * ng template outleet dla tableki -->
   <!-- * dynamiczna tableka store/service button send to backend albo edycja w comparerze -->

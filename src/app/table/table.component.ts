@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FactService } from '../fact.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
@@ -12,6 +12,8 @@ import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import * as actions from './../store/jokes.actions';
+
+import * as jokeSelectors from './../store/jokes.selectors';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -30,10 +32,15 @@ export class TableComponent implements OnInit {
   searchedJoke$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
 
+  storeJokes$: Observable<any> = this.store$.select(jokeSelectors.jokeList);
+
+  // backendJokes$: Observable<httpSearchJokeResponse> =
+  //   this.factService.searchedJokeObservable$;
+
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.activatedRoute.queryParams.subscribe(({ searchPhrase }) => {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (searchPhrase) {
         this.factService.getJokeBySearchPhrase(searchPhrase);
       }

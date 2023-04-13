@@ -37,20 +37,18 @@ export class UserPanelComponent implements OnInit {
   });
 
   public downloadRandomJoke(): void {
-    this.router.navigateByUrl('').then(() => {
-      this.router.navigate(['joke-editor'], {
-        queryParams: { category: this.selectedCategory?.value },
-        skipLocationChange: true,
-      });
+    this.router.navigate(['joke-editor'], {
+      queryParams: { category: this.selectedCategory?.value },
+      skipLocationChange: true,
     });
+
+    //czyli randomowy wchodzi do compare-text
   }
 
   onSearchJoke() {
-    this.router.navigateByUrl('').then(() => {
-      this.router.navigate(['table'], {
-        queryParams: { searchPhrase: this.searchValue?.value },
-        skipLocationChange: true,
-      });
+    this.router.navigate(['table'], {
+      queryParams: { searchPhrase: this.searchValue?.value },
+      skipLocationChange: true,
     });
   }
 
