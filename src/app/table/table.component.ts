@@ -40,7 +40,9 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.activatedRoute.queryParams.subscribe((params: Params) => {});
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      console.log(params);
+    });
   }
 
   onAddJokeToStore(jokeData: httpJokeResponse) {

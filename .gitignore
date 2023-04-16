@@ -46,3 +46,5 @@ Thumbs.db
 .env
 
 src/main.ts
+src/main.ts
+src/app/fact.service.ts
