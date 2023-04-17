@@ -15,17 +15,16 @@ export class ServiceComponent implements OnInit {
       .pipe(map((v: { selection: SelectionEnum }) => v.selection))
       .subscribe((v: SelectionEnum): void => {
         if (SelectionEnum.Store) {
-          this.router.navigate(['table'], {
-            skipLocationChange: true,
-            queryParams: { service: true, type: SelectionEnum.Store },
-          });
+          // this.router.navigate(['table'], {
+          //   skipLocationChange: true,
+          //   queryParams: { service: true, type: SelectionEnum.Store },
+          // });
         }
-
         if (SelectionEnum.Server) {
-          this.router.navigate(['table'], {
-            skipLocationChange: true,
-            queryParams: { service: true, type: SelectionEnum.Server },
-          });
+          // this.router.navigate(['table'], {
+          //   skipLocationChange: true,
+          //   queryParams: { service: true, type: SelectionEnum.Server },
+          // });
         }
       });
   }

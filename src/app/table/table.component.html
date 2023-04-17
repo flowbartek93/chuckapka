@@ -10,6 +10,7 @@
         <td>{{ result.value }}</td>
         <td>{{ result.created_at }}</td>
         <td>{{ result.id }}</td>
+
         <td style="width: 100px; text-align: center">
           <button (click)="onAddJokeToStore(result)" class="add">
             <fa-icon [icon]="faPlus"></fa-icon>
@@ -19,3 +20,7 @@
     </table>
   </div>
 </ng-container>
+
+<!-- <ng-template let- #var></ng-template>
+
+<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:items}"></ng-container> -->

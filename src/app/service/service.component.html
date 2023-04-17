@@ -1,28 +1,31 @@
-<div class="container">
-  <div class="radio-btns">
-    <form [formGroup]="form">
-      <input
-        type="radio"
-        name="selection"
-        id="store"
-        value="Store"
-        formControlName="selection"
-      />
-      <label for="store">Store</label>
+<div>
+  <div class="container">
+    <div class="radio-btns">
+      <form [formGroup]="form">
+        <input
+          type="radio"
+          name="selection"
+          id="store"
+          value="Store"
+          formControlName="selection"
+        />
+        <label for="store">Store</label>
 
-      <input
-        type="radio"
-        name="selection"
-        id="server"
-        value="Server"
-        formControlName="selection"
-      />
-      <label for="server">Server</label>
-    </form>
+        <input
+          type="radio"
+          name="selection"
+          id="server"
+          value="Server"
+          formControlName="selection"
+        />
+        <label for="server">Server</label>
+      </form>
+    </div>
+
+    <!-- * table component -->
+    <!-- * ng template outleet dla tableki -->
+    <!-- * dynamiczna tableka store/service button send to backend albo edycja w comparerze -->
   </div>
-
-  <div class="table"></div>
-  <!-- * table component -->
-  <!-- * ng template outleet dla tableki -->
-  <!-- * dynamiczna tableka store/service button send to backend albo edycja w comparerze -->
 </div>
+
+<div><app-table></app-table></div>

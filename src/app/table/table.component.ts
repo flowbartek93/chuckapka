@@ -34,6 +34,8 @@ export class TableComponent implements OnInit {
 
   storeJokes$: Observable<any> = this.store$.select(jokeSelectors.jokeList);
 
+  // !logika dla innego rodzaju tabelek
+
   // backendJokes$: Observable<httpSearchJokeResponse> =
   //   this.factService.searchedJokeObservable$;
 
@@ -41,7 +43,7 @@ export class TableComponent implements OnInit {
 
   ngAfterViewInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      console.log(params);
+      this.factService.getJokeBySearchPhrase(params['searchPhrase']);
     });
   }
 
