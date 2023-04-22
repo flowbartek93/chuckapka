@@ -10,7 +10,11 @@ const routes: Routes = [
   { path: '', component: UserPanelComponent },
   { path: 'joke-editor', component: JokeEditorComponent },
   { path: 'table', component: TableComponent },
-  { path: 'service', component: ServiceComponent },
+  {
+    path: 'service',
+    component: ServiceComponent,
+    children: [{ path: 'table', component: TableComponent }],
+  },
 ];
 
 @NgModule({
