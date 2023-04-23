@@ -14,6 +14,8 @@ import { Store } from '@ngrx/store';
 import * as actions from './../store/jokes.actions';
 
 import * as jokeSelectors from './../store/jokes.selectors';
+import { SelectionEnum } from '../shared/enums/radioSelection.enum';
+import { Joke } from '../models/joke.model';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -39,17 +41,30 @@ export class TableComponent implements OnInit {
   // backendJokes$: Observable<httpSearchJokeResponse> =
   //   this.factService.searchedJokeObservable$;
 
+  public tableType: SelectionEnum | null = null;
+
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.factService.getJokeBySearchPhrase(params['searchPhrase']);
+      if (params['service']) {
+        if (params['type']) {
+          this.tableType = params['type'];
+        }
+      } else {
+        (this.tableType = SelectionEnum.Api),
+          this.factService.getJokeBySearchPhrase(params['searchPhrase']);
+      }
     });
   }
 
   onAddJokeToStore(jokeData: httpJokeResponse) {
     this.store$.dispatch(actions.addSingleJoke({ joke: jokeData }));
   }
+
+  onDeleteFromServer() {}
+
+  onSendToBackend(joke: Joke) {}
 
   public ngDoCheck() {}
 }

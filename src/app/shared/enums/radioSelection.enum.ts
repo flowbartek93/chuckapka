@@ -1,4 +1,5 @@
 export enum SelectionEnum {
-  Store,
-  Server,
+  Store = 'Store',
+  Server = 'Server',
+  Api = 'Api',
 }

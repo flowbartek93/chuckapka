@@ -1,5 +1,5 @@
-<ng-container *ngIf="searchedJoke$ | async as response">
-  <div class="joke-table">
+<ng-template>
+  <div class="joke-table" *ngIf="searchedJoke$ | async as response">
     <table style="width: 50%">
       <tr>
         <th>joke</th>
@@ -19,8 +19,52 @@
       </tr>
     </table>
   </div>
-</ng-container>
+</ng-template>
 
-<!-- <ng-template let- #var></ng-template>
+<!-- <ng-template #jokesStore>
+  <div class="joke-table" *ngIf="storeJokes$ | async as response">
+    <table style="width: 50%">
+      <tr>
+        <th>joke</th>
+        <th>date</th>
+        <th>id</th>
+      </tr>
+      <tr *ngFor="let result of response?.result; let i = index">
+        <td>{{ result.value }}</td>
+        <td>{{ result.created_at }}</td>
+        <td>{{ result.id }}</td>
 
-<ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:items}"></ng-container> -->
+        <td style="width: 100px; text-align: center">
+          <button (click)="onSendToBackend(result)" class="add">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-template>
+
+<ng-template #jokesBackend>
+  <div class="joke-table" *ngIf="serviceJokes$ | async as response">
+    <table style="width: 50%">
+      <tr>
+        <th>joke</th>
+        <th>date</th>
+        <th>id</th>
+      </tr>
+      <tr *ngFor="let result of response?.result; let i = index">
+        <td>{{ result.value }}</td>
+        <td>{{ result.created_at }}</td>
+        <td>{{ result.id }}</td>
+
+        <td style="width: 100px; text-align: center">
+          <button (click)="onDeleteFromServer(result)" class="add">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-template> -->
+
+<!--  ! itemTemplater <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:items}"></ng-container>   -->
