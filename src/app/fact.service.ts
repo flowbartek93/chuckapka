@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Joke } from './models/joke.model';
 import { exhaustMap, map } from 'rxjs/operators';
 import { httpJokeResponse } from './models/httpJokeResponse.model';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environments';
 import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
 
 @Injectable({
@@ -70,6 +70,7 @@ export class FactService {
         const httpParams = new HttpParams();
         searchQuery = httpParams.append('query', searchPhrase);
 
+        console.log(searchPhrase);
         return this.httpService.get<httpSearchJokeResponse>(this.searchUrl, {
           params: searchQuery,
           headers: {
@@ -96,6 +97,7 @@ export class FactService {
   }
 
   public getJokeBySearchPhrase(searchPhrase: string) {
+    console.log(searchPhrase);
     this.getJokeByPhrase$.next(searchPhrase);
   }
 

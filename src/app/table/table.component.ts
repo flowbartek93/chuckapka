@@ -1,8 +1,11 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -26,10 +29,18 @@ export class TableComponent implements OnInit {
   constructor(
     private store$: Store,
     private factService: FactService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public faPlus: IconDefinition = faPlus;
+
+  @ViewChild('jokesApi', { static: true })
+  jokesApiTemplate!: TemplateRef<HTMLElement>;
+
+  @ViewChild('jokesStore', { static: true })
+  jokesStoreTemplate!: TemplateRef<HTMLElement>;
+  // @ViewChild('jokesBackend') jokesBackendTemplate?: TemplateRef<HTMLElement>;
 
   searchedJoke$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
@@ -43,18 +54,26 @@ export class TableComponent implements OnInit {
 
   public tableType: SelectionEnum | null = null;
 
+  public tableTemplate: any;
+
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
+      console.log(params);
       if (params['service']) {
         if (params['type']) {
           this.tableType = params['type'];
         }
-      } else {
-        (this.tableType = SelectionEnum.Api),
-          this.factService.getJokeBySearchPhrase(params['searchPhrase']);
       }
+
+      if (params['searchPhrase']) {
+        this.tableType = SelectionEnum.Api;
+
+        this.factService.getJokeBySearchPhrase(params['searchPhrase']);
+      }
+
+      this.tableTemplate = this.setTable();
     });
   }
 
@@ -65,6 +84,20 @@ export class TableComponent implements OnInit {
   onDeleteFromServer() {}
 
   onSendToBackend(joke: Joke) {}
+
+  setTable() {
+    if (this.tableType === SelectionEnum.Api) {
+      console.log(this.jokesApiTemplate);
+      console.log(this.jokesStoreTemplate);
+      return this.jokesApiTemplate;
+    }
+
+    if (this.tableType === SelectionEnum.Store) {
+      return this.jokesStoreTemplate;
+    }
+
+    return;
+  }
 
   public ngDoCheck() {}
 }

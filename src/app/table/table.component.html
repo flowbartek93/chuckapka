@@ -1,5 +1,5 @@
-<ng-template>
-  <div class="joke-table" *ngIf="searchedJoke$ | async as response">
+<ng-template #jokesApi>
+  <div class="joke-table">
     <table style="width: 50%">
       <tr>
         <th>joke</th>
@@ -21,7 +21,7 @@
   </div>
 </ng-template>
 
-<!-- <ng-template #jokesStore>
+<ng-template #jokesStore>
   <div class="joke-table" *ngIf="storeJokes$ | async as response">
     <table style="width: 50%">
       <tr>
@@ -44,7 +44,7 @@
   </div>
 </ng-template>
 
-<ng-template #jokesBackend>
+<!-- <ng-template #jokesBackend>
   <div class="joke-table" *ngIf="serviceJokes$ | async as response">
     <table style="width: 50%">
       <tr>
@@ -65,6 +65,6 @@
       </tr>
     </table>
   </div>
-</ng-template> -->
+</ng-template>  -->
 
-<!--  ! itemTemplater <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:items}"></ng-container>   -->
+<ng-container [ngTemplateOutlet]="tableTemplate"></ng-container>
