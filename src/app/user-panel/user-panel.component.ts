@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { FactService } from '../fact.service';
 import { userInput } from '../models/controls.model';
+import { SelectionEnum } from '../shared/enums/radioSelection.enum';
 
 @Component({
   selector: 'app-user-panel',
@@ -46,10 +47,16 @@ export class UserPanelComponent implements OnInit {
   }
 
   onSearchJoke() {
-    this.router.navigate(['table'], {
-      queryParams: { searchPhrase: this.searchValue?.value },
-      skipLocationChange: true,
-    });
+    if (this.searchValue?.value) {
+      this.router.navigate(['table'], {
+        queryParams: {
+          service: false,
+          type: SelectionEnum.Api,
+          searchPhrase: this.searchValue.value,
+        },
+        skipLocationChange: true,
+      });
+    }
   }
 
   ngOnInit(): void {}

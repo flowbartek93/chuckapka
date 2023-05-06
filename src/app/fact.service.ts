@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Joke } from './models/joke.model';
 import { exhaustMap, map } from 'rxjs/operators';
 import { httpJokeResponse } from './models/httpJokeResponse.model';
-import { environment } from 'src/environments/environments';
+import { environment } from 'src/environments/environment';
 import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
 
 @Injectable({
@@ -97,7 +97,6 @@ export class FactService {
   }
 
   public getJokeBySearchPhrase(searchPhrase: string) {
-    console.log(searchPhrase);
     this.getJokeByPhrase$.next(searchPhrase);
   }
 

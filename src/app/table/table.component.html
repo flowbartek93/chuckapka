@@ -1,5 +1,6 @@
 <ng-template #jokesApi>
-  <div class="joke-table">
+  <p>aa</p>
+  <div class="joke-table" *ngIf="apiJokes$ | async as response">
     <table style="width: 50%">
       <tr>
         <th>joke</th>
@@ -21,7 +22,7 @@
   </div>
 </ng-template>
 
-<ng-template #jokesStore>
+<!-- <ng-template #jokesStore>
   <div class="joke-table" *ngIf="storeJokes$ | async as response">
     <table style="width: 50%">
       <tr>
@@ -42,7 +43,7 @@
       </tr>
     </table>
   </div>
-</ng-template>
+</ng-template> -->
 
 <!-- <ng-template #jokesBackend>
   <div class="joke-table" *ngIf="serviceJokes$ | async as response">
