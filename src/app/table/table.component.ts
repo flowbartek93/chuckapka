@@ -44,14 +44,12 @@ export class TableComponent implements OnInit {
   @ViewChild('jokesStore', { static: true })
   jokesStoreTemplate!: TemplateRef<HTMLElement>;
 
-  // @ViewChild('jokesBackend') jokesBackendTemplate?: TemplateRef<HTMLElement>;
+  @ViewChild('jokesBackend') jokesBackendTemplate!: TemplateRef<HTMLElement>;
 
   apiJokes$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
 
-  storeJokes$: Observable<any> = this.store$.select(jokeSelectors.jokeList);
-
-  // !logika dla innego rodzaju tabelek
+  storeJokes$: Observable<Joke[]> = this.store$.select(jokeSelectors.jokeList);
 
   backendJokes$: Observable<httpSearchJokeResponse> =
     this.factService.searchedJokeObservable$;
@@ -69,6 +67,14 @@ export class TableComponent implements OnInit {
         this.tableTemplate = this.jokesApiTemplate;
         this.searchPhrase = params['searchPhrase'];
       }
+      if (params['type'] === SelectionEnum.Server) {
+        this.tableType = SelectionEnum.Server;
+        this.tableTemplate = this.jokesBackendTemplate;
+      }
+      if (params['type'] === SelectionEnum.Store) {
+        this.tableType = SelectionEnum.Store;
+        this.tableTemplate = this.jokesStoreTemplate;
+      }
     });
   }
 
@@ -85,6 +91,4 @@ export class TableComponent implements OnInit {
   onDeleteFromServer() {}
 
   onSendToBackend(joke: Joke) {}
-
-  setTable() {}
 }

@@ -1,5 +1,4 @@
 <ng-template #jokesApi>
-  <p>aa</p>
   <div class="joke-table" *ngIf="apiJokes$ | async as response">
     <table style="width: 50%">
       <tr>
@@ -22,30 +21,32 @@
   </div>
 </ng-template>
 
-<!-- <ng-template #jokesStore>
-  <div class="joke-table" *ngIf="storeJokes$ | async as response">
+<ng-template #jokesStore>
+  <div class="joke-table" *ngIf="storeJokes$ | async as storeJokes">
     <table style="width: 50%">
       <tr>
         <th>joke</th>
         <th>date</th>
         <th>id</th>
+        <th>send</th>
       </tr>
-      <tr *ngFor="let result of response?.result; let i = index">
-        <td>{{ result.value }}</td>
-        <td>{{ result.created_at }}</td>
-        <td>{{ result.id }}</td>
+      <tr *ngFor="let joke of storeJokes; let i = index">
+        <td>{{ joke.id }}</td>
+        <td>{{ joke.createdDate }}</td>
+        <td>{{ joke.text }}</td>
 
         <td style="width: 100px; text-align: center">
-          <button (click)="onSendToBackend(result)" class="add">
+          <button (click)="onSendToBackend(joke)" class="add">
             <fa-icon [icon]="faPlus"></fa-icon>
           </button>
         </td>
       </tr>
     </table>
   </div>
-</ng-template> -->
+</ng-template>
 
-<!-- <ng-template #jokesBackend>
+<!-- 
+ <ng-template #jokesBackend>
   <div class="joke-table" *ngIf="serviceJokes$ | async as response">
     <table style="width: 50%">
       <tr>
@@ -66,6 +67,6 @@
       </tr>
     </table>
   </div>
-</ng-template>  -->
+</ng-template>   -->
 
 <ng-container [ngTemplateOutlet]="tableTemplate"></ng-container>
