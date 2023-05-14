@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as jokeSelectors from './../store/jokes.selectors';
 import { Joke } from '../models/joke.model';
-import { JokeEditorService } from './joke-editor.service';
+import { JokeStoreService } from '../services/joke-store.service';
 import { FormControl } from '@angular/forms';
 import * as actions from './../store/jokes.actions';
 
@@ -11,12 +11,12 @@ import * as actions from './../store/jokes.actions';
   templateUrl: './joke-editor.component.html',
   styleUrls: ['./joke-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [JokeEditorService],
+  providers: [JokeStoreService],
 })
 export class JokeEditorComponent implements OnInit {
   constructor(
     private store$: Store,
-    private jokeEditorService: JokeEditorService
+    private jokeStoreService: JokeStoreService
   ) {
     this.compareTextControl.valueChanges.subscribe((v) => {
       this.editedJokeText = v;
@@ -24,7 +24,7 @@ export class JokeEditorComponent implements OnInit {
     });
   }
 
-  pickedJokesList$ = this.store$.select(jokeSelectors.jokeList);
+  pickedJokesList$ = this.jokeStoreService.jokesList$;
 
   public compareTextControl: FormControl = new FormControl('');
 
@@ -35,10 +35,6 @@ export class JokeEditorComponent implements OnInit {
   private editedJokeText: string | null = null;
 
   public modifyEnabled = false;
-
-  get editedJokes() {
-    return this.jokeEditorService.editedJokes;
-  }
 
   ngOnInit(): void {}
 

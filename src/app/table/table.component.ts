@@ -1,39 +1,28 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, Subject, delay, tap } from 'rxjs';
-import { FactService } from '../fact.service';
+import { Observable, tap } from 'rxjs';
+import { JokeApiService } from '../services/joke-api.service';
 import { httpJokeResponse } from '../models/httpJokeResponse.model';
 import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 import { faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import * as actions from './../store/jokes.actions';
 
-import * as jokeSelectors from './../store/jokes.selectors';
 import { SelectionEnum } from '../shared/enums/radioSelection.enum';
 import { Joke } from '../models/joke.model';
+import { JokeStoreService } from '../services/joke-store.service';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
   constructor(
     private store$: Store,
-    private factService: FactService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private jokeStoreService: JokeStoreService,
+    private jokeApiService: JokeApiService
   ) {}
 
   public faPlus: IconDefinition = faPlus;
@@ -47,12 +36,9 @@ export class TableComponent implements OnInit {
   @ViewChild('jokesBackend') jokesBackendTemplate!: TemplateRef<HTMLElement>;
 
   apiJokes$: Observable<httpSearchJokeResponse> =
-    this.factService.searchedJokeObservable$;
+    this.jokeApiService.searchedJokeObservable$;
 
-  storeJokes$: Observable<Joke[]> = this.store$.select(jokeSelectors.jokeList);
-
-  backendJokes$: Observable<httpSearchJokeResponse> =
-    this.factService.searchedJokeObservable$;
+  storeJokes$: Observable<Joke[] | null> = this.jokeStoreService.jokesList$;
 
   private tableType: SelectionEnum | null = SelectionEnum.Api;
 
@@ -80,7 +66,7 @@ export class TableComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.tableType === SelectionEnum.Api) {
-      this.factService.getJokeBySearchPhrase(this.searchPhrase);
+      this.jokeApiService.getJokeBySearchPhrase(this.searchPhrase);
     }
   }
 

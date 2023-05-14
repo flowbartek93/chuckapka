@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Joke } from './models/joke.model';
+import { Joke } from '../models/joke.model';
 import { exhaustMap, map } from 'rxjs/operators';
-import { httpJokeResponse } from './models/httpJokeResponse.model';
+import { httpJokeResponse } from '../models/httpJokeResponse.model';
 import { environment } from 'src/environments/environment';
-import { httpSearchJokeResponse } from './models/httpSearchJokeResponse.model';
+import { httpSearchJokeResponse } from '../models/httpSearchJokeResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FactService {
+export class JokeApiService {
   constructor(private httpService: HttpClient) {}
 
   private randomJokeUrl =

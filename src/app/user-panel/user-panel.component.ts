@@ -4,9 +4,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
-import { FactService } from '../fact.service';
+import { JokeApiService } from '../services/joke-api.service';
 import { userInput } from '../models/controls.model';
 import { SelectionEnum } from '../shared/enums/radioSelection.enum';
+import { Joke } from '../models/joke.model';
 
 @Component({
   selector: 'app-user-panel',
@@ -17,10 +18,10 @@ import { SelectionEnum } from '../shared/enums/radioSelection.enum';
 export class UserPanelComponent implements OnInit {
   public navigationSubscription: Subscription = new Subscription();
 
-  constructor(private factService: FactService, private router: Router) {}
+  constructor(private jokeApiService: JokeApiService, private router: Router) {}
 
   categories$: Observable<string[] | null> =
-    this.factService.getCategoriesObservable$;
+    this.jokeApiService.getCategoriesObservable$;
 
   get searchValue() {
     return this.form.get('search');
@@ -62,6 +63,6 @@ export class UserPanelComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.factService.getCategories(); //poczytać o tym
+    this.jokeApiService.getCategories(); //poczytać o tym
   }
 }
